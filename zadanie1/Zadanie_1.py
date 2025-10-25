@@ -37,7 +37,7 @@ except ValueError as ve:
 
 
 else:
-    # jeśli nie ma błędów przystąp do wyświetlania 
+    # jesli nie ma bledow przystap do wyswietlania 
     print (f"Wyniki to: {results}")
 
     # uzycie bioblioteki math
