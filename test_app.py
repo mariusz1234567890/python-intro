@@ -1,10 +1,7 @@
 # Instalacja modulu do unit testow / Instalation of module to unit tests.
 
-try:
-    import unittest
-    print("Moduł 'unittest' jest dostępny.")
-except ImportError:
-    print("Moduł 'unittest' nie jest dostępny.")
+import unittest
+print("Moduł 'unittest' jest dostępny.")
 
 # Zainstalowanie pytest komenda w terminalu.
     # py -m pip install pytest

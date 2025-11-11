@@ -1,6 +1,7 @@
 # FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ E-MAIL / THE FUNCTION OF CHECKING VALIDITY OF EMAIL 
 
-# ! Metodolodia TDD: test najpierw -> potem kod minimalny -> refaktoryzacja / Metodology of TDD: first test -> minimal code -> refactor of code
+# ! Metodolodia TDD: test najpierw -> potem kod minimalny -> refaktoryzacja 
+# ! Methodology of TDD: first test -> minimal code -> refactor of code
 
 
 
