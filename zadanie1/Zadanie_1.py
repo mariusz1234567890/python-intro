@@ -23,7 +23,7 @@ try:
         if number1 != number2:
             result = number1 + number2
             print(f"{number1} + {number2} = {result}")
-        # jesli cyfry nie sa rozne to pomnoczyc je przez siebie
+        # jesli cyfry nie sa rozne to pomnozyc je przez siebie
         else:
             result = number1 * number2
     
