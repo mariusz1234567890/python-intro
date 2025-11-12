@@ -87,3 +87,9 @@ class TestApp(unittest.TestCase):
 
         # Przypadek błędny: same nieparzyste
         self.assertEqual(filter_even_numbers([1,3,5]), [])
+
+    def test_filter_even_numbers_parametrized(self):
+        cases = [([1,2,3,4,5], [2,4]), ([],[]), ([1,3,5], [])]
+        for input_list, expected in cases:
+            with self.subTest(input_list=input_list):
+                self.assertEqual(filter_even_numbers(input_list), expected)

@@ -13,6 +13,8 @@ import re
 #  Definicja funkcji Regex na email
 
 def is_valid_email(email):
+
+    """Sprawdzanie poprawności napisania e-mail."""
     if email == "" or email is None:
         return False 
    
@@ -50,16 +52,20 @@ def is_valid_email(email):
 
 def calculate_triangle_area(base: float, height: float) -> float:
 
+    """Oblicza pole trójkąta. Rzuca ValueError dla ujemnych wartości."""
     if base < 0 or height < 0:
-        raise ValueError("Podsrawa i wysokość nie mogą być ujmene, ale o wartości zero")
+        raise ValueError("Poddstawa i wysokość nie mogą być ujmene, ale o wartości zero")
     return (base * height) / 2
 
 
 # FUNKCJA PRZETWARZAJĄCA LISTĘ DANYCH (SORTOWANIE, FILTRACJA) / DATA LIST PROCESSING FUNCTION 
 #  Cel: Filtruje parzyste liczby z listy (przetwarzanie list).
 
-def filter_even_numbers(numbers):
+def filter_even_numbers(numbers: list[int]) -> list[int]:
     
+    """Filtruje parzyste liczby z listy."""
+    #  Iteruje przez każdą liczbę (num) w wejściowej liście numbers.
+    #  Warunek filtrowania: Sprawdza, czy reszta z dzielenia liczby num przez 2 jest równa 0. Jest to definicja liczby parzystej.
     return [nun for nun in numbers if nun % 2 == 0]
 
 # Funkcja konwertująca format dat.
