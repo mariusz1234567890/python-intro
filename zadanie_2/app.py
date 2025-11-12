@@ -1,4 +1,4 @@
-# FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ E-MAIL / THE FUNCTION OF CHECKING VALIDITY OF EMAIL 
+# FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ E-MAIL / E-MAIL VALIDITY CHECK FUNCTION 
 
 # ! Metodolodia TDD: test najpierw -> potem kod minimalny -> refaktoryzacja 
 # ! Methodology of TDD: first test -> minimal code -> refactor of code
@@ -44,18 +44,23 @@ def is_valid_email(email):
 
 
 
+# FUNKCJA DOKONUJĄCA PROSTYCH OBLICZEŃ MATEMATEMATYCZNYCH NP. OBLICZANIA POLA FIGURY / A FUNCTION THAT PERFORMS SIMPLE MATHEMATICAL CALCULATIONS, SUCH AS CALCULATING THE AREA OF A SHAPE.
+#  Cel: Oblicza pole trójkąta (wzór: (base * height) / 2). Proste obliczenia matematyczne.
 
 
+def calculate_triangle_area(base: float, height: float) -> float:
+
+    if base < 0 or height < 0:
+        raise ValueError("Podsrawa i wysokość nie mogą być ujmene, ale o wartości zero")
+    return (base * height) / 2
 
 
+# FUNKCJA PRZETWARZAJĄCA LISTĘ DANYCH (SORTOWANIE, FILTRACJA) / DATA LIST PROCESSING FUNCTION 
+#  Cel: Filtruje parzyste liczby z listy (przetwarzanie list).
 
-
-
-
-
-# Funkcja dokonująca prostych obliczeń matematycznych (np. obliczanie pola figury).
-
-# Funkcja przetwarzająca listę danych (np. filtracja, sortowanie).
+def filter_even_numbers(numbers):
+    
+    return [nun for nun in numbers if nun % 2 == 0]
 
 # Funkcja konwertująca format dat.
 
