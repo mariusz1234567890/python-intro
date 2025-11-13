@@ -68,6 +68,15 @@ def filter_even_numbers(numbers: list[int]) -> list[int]:
     #  Warunek filtrowania: Sprawdza, czy reszta z dzielenia liczby num przez 2 jest równa 0. Jest to definicja liczby parzystej.
     return [nun for nun in numbers if nun % 2 == 0]
 
-# Funkcja konwertująca format dat.
+# FUNKCJA KONWERTUJĄCA FORMAT DAT
+# Cel: Konwertuje datę z 'DD-MM-YYYY' na 'YYYY-MM-DD'.
+
+from datetime import datetime
+def convert_date_format(date_str):
+    try:
+        dt = datetime.strptime(date_str, "%d-%m-%Y")
+        return dt.strftime("%Y-%m-%d")
+    except ValueError:
+        raise ValueError("Niepoprawny wejściowy format daty, oczekiwany jest DD-MM-YYYY")
 
 # Funkcja sprawdzająca, czy tekst jest palindromem.

@@ -23,6 +23,11 @@ from app import calculate_triangle_area
 # Import konkretnej funkcji filter_even_numbers z pliku o nazwie app.py, którą chcemy przetestować.
 from app import filter_even_numbers
 
+# Import konkretnej funkcji nvert_date_format z pliku o nazwie app.py, którą chcemy przetestować.
+from app import convert_date_format
+
+
+
 # To jest definicja klasy testowej. Musi dziedziczyć po klasie unittest.TestCase. Klasa testowa gromadzi zestaw powiązanych testów.
 # W Pythonie klasa jest szablonem (planem, przepisem), na podstawie którego tworzy się obiekty (konkretne instancje). Umożliwia grupowanie danych (atrybutów) i funkcji (metod) w jedną spójną jednostkę.
 class TestApp(unittest.TestCase):
@@ -93,3 +98,46 @@ class TestApp(unittest.TestCase):
         for input_list, expected in cases:
             with self.subTest(input_list=input_list):
                 self.assertEqual(filter_even_numbers(input_list), expected)
+
+# FUNKCJA KONWERTUJĄCA FORMAT DAT
+
+    def test_convert_date_format_typical(self):
+
+        # Typowy przypadek: poprawna data
+        self.assertEqual(convert_date_format("31-12-2025"), "2025-12-31")
+
+    def test_convert_date_format_invalid(self):
+
+        # Przypadek błędny: zła data
+        with self.assertRaises(ValueError):
+            convert_date_format("32-12-2025")
+    
+    def test_convert_date_format_edge(self):
+    
+        # Przypadek brzegowy: data z zerami
+        self.assertEqual(convert_date_format("01-01-2000"), "2000-01-01")
+
+
+    def test_convert_date_format_parametrized(self):
+        # Lista przypadków: (data wejściowa DD-MM-RRRR, oczekiwany wynik RRRR-MM-DD)
+        cases = [
+            # 1. Typowe/różne daty
+            ("15-06-2023", "2023-06-15"),  # Typowa data w środku miesiąca
+            ("01-02-2024", "2024-02-01"),  # Pojedyncze cyfry w dniu i miesiącu
+            ("31-10-2021", "2021-10-31"),  # Ostatni dzień miesiąca
+            
+            # 2. Miesiące krótkie (Test brzegowy miesiąca)
+            ("30-04-2025", "2025-04-30"),  # Ostatni dzień kwietnia (30-dniowy miesiąc)
+            ("28-02-2023", "2023-02-28"),  # Ostatni dzień lutego (zwykły rok)
+            
+            # 3. Rok przestępny (Kluczowy test brzegowy)
+            ("29-02-2024", "2024-02-29"),  # Test, czy data z roku przestępnego (2024) jest poprawna
+            
+            # 4. Inne brzegi
+            ("01-01-1970", "1970-01-01"),  # Data brzegowa historyczna (często używana)
+            ("31-12-2099", "2099-12-31"),  # Data brzegowa przyszła
+        ]
+
+        for input_date, expected_date in cases:
+            with self.subTest(input=input_date):
+                self.assertEqual(convert_date_format(input_date), expected_date)
