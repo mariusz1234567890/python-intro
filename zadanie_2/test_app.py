@@ -23,9 +23,11 @@ from app import calculate_triangle_area
 # Import konkretnej funkcji filter_even_numbers z pliku o nazwie app.py, którą chcemy przetestować.
 from app import filter_even_numbers
 
-# Import konkretnej funkcji nvert_date_format z pliku o nazwie app.py, którą chcemy przetestować.
+# Import konkretnej funkcji convert_date_format z pliku o nazwie app.py, którą chcemy przetestować.
 from app import convert_date_format
 
+# Import konkretnej funkcji  is_polindrome z pliku o nazwie app.py, którą chcemy przetestować.
+from app import is_polindrome
 
 
 # To jest definicja klasy testowej. Musi dziedziczyć po klasie unittest.TestCase. Klasa testowa gromadzi zestaw powiązanych testów.
@@ -99,7 +101,7 @@ class TestApp(unittest.TestCase):
             with self.subTest(input_list=input_list):
                 self.assertEqual(filter_even_numbers(input_list), expected)
 
-# FUNKCJA KONWERTUJĄCA FORMAT DAT
+# FUNKCJA KONWERTUJĄCA FORMAT DAT.
 
     def test_convert_date_format_typical(self):
 
@@ -141,3 +143,17 @@ class TestApp(unittest.TestCase):
         for input_date, expected_date in cases:
             with self.subTest(input=input_date):
                 self.assertEqual(convert_date_format(input_date), expected_date)
+
+# FUNKCJA SPRAWDZAJĄCA, CZY TEKST JEST POLINDROMEM.
+
+    def test_is_polindrome_typical(self):
+
+        # Przypadek typowy: jest polindromem
+        self.assertTrue(is_polindrome("Kobyła ma mały bok"))
+
+        # Przypadek: nie jest polindromem
+        self.assertFalse(is_polindrome("Banan"))
+
+        # Przypadek brzegowy: brak znaku lub pojedyńczy znak
+        self.assertTrue(is_polindrome(""))
+        self.assertTrue(is_polindrome("a"))
