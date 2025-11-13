@@ -79,9 +79,9 @@ def convert_date_format(date_str):
     except ValueError:
         raise ValueError("Niepoprawny wejściowy format daty, oczekiwany jest DD-MM-YYYY")
 
-# FUNKCJA SPRAWDZAJĄCA, CZY TEKST JEST POLINDROMEM.
+# FUNKCJA SPRAWDZAJĄCA, CZY TEKST JEST PALINDROMEM.
 # Cel: Sprawdza palindrom (ignoruj spacje, wielkość liter).
 
-def is_polindrome(text):
+def is_palindrome(text):
     cleaned = ''.join(c.lower() for c in text if c.isalnum())
     return cleaned == cleaned[::-1]

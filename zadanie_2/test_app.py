@@ -27,7 +27,7 @@ from app import filter_even_numbers
 from app import convert_date_format
 
 # Import konkretnej funkcji  is_polindrome z pliku o nazwie app.py, którą chcemy przetestować.
-from app import is_polindrome
+from app import is_palindrome
 
 
 # To jest definicja klasy testowej. Musi dziedziczyć po klasie unittest.TestCase. Klasa testowa gromadzi zestaw powiązanych testów.
@@ -120,40 +120,66 @@ class TestApp(unittest.TestCase):
         self.assertEqual(convert_date_format("01-01-2000"), "2000-01-01")
 
 
-    def test_convert_date_format_parametrized(self):
-        # Lista przypadków: (data wejściowa DD-MM-RRRR, oczekiwany wynik RRRR-MM-DD)
+    def test_convert_date_format_valid_parametrized(self):
         cases = [
-            # 1. Typowe/różne daty
-            ("15-06-2023", "2023-06-15"),  # Typowa data w środku miesiąca
-            ("01-02-2024", "2024-02-01"),  # Pojedyncze cyfry w dniu i miesiącu
-            ("31-10-2021", "2021-10-31"),  # Ostatni dzień miesiąca
-            
-            # 2. Miesiące krótkie (Test brzegowy miesiąca)
-            ("30-04-2025", "2025-04-30"),  # Ostatni dzień kwietnia (30-dniowy miesiąc)
-            ("28-02-2023", "2023-02-28"),  # Ostatni dzień lutego (zwykły rok)
-            
-            # 3. Rok przestępny (Kluczowy test brzegowy)
-            ("29-02-2024", "2024-02-29"),  # Test, czy data z roku przestępnego (2024) jest poprawna
-            
-            # 4. Inne brzegi
-            ("01-01-1970", "1970-01-01"),  # Data brzegowa historyczna (często używana)
-            ("31-12-2099", "2099-12-31"),  # Data brzegowa przyszła
+            ("31-12-2023", "2023-12-31"),  # Typowy: koniec roku
+            ("01-01-2000", "2000-01-01"),  # Brzegowy: początek wieku
+            ("29-02-2024", "2024-02-29")   # Brzegowy: rok przestępny
         ]
+        for input_date, expected in cases:
+            with self.subTest(input_date=input_date):
+                self.assertEqual(convert_date_format(input_date), expected)
 
-        for input_date, expected_date in cases:
-            with self.subTest(input=input_date):
-                self.assertEqual(convert_date_format(input_date), expected_date)
+    def test_convert_date_format_invalid_parametrized(self):
+        cases = [
+            "32-12-2023",  # Nieprawidłowy dzień
+            "29-02-2023",  # Nieprzestępny rok
+            "abc-def-ghi"  # Całkowicie błędny format
+        ]
+        for input_date in cases:
+            with self.subTest(input_date=input_date):
+                with self.assertRaises(ValueError):
+                    convert_date_format(input_date)
 
-# FUNKCJA SPRAWDZAJĄCA, CZY TEKST JEST POLINDROMEM.
 
-    def test_is_polindrome_typical(self):
+# FUNKCJA SPRAWDZAJĄCA, CZY TEKST JEST PALINDROMEM.
 
-        # Przypadek typowy: jest polindromem
-        self.assertTrue(is_polindrome("Kobyła ma mały bok"))
+    def test_is_palindrome_typical(self):
 
-        # Przypadek: nie jest polindromem
-        self.assertFalse(is_polindrome("Banan"))
+        # Przypadek typowy: jest palindromem
+        self.assertTrue(is_palindrome("Kobyła ma mały bok"))
 
+    def test_is_palindrome_not(self):
+        # Przypadek: nie jest palindromem
+        self.assertFalse(is_palindrome("Banan"))
+
+    def test_is_palindrome_edge(self):
         # Przypadek brzegowy: brak znaku lub pojedyńczy znak
-        self.assertTrue(is_polindrome(""))
-        self.assertTrue(is_polindrome("a"))
+        self.assertTrue(is_palindrome(""))
+        self.assertTrue(is_palindrome("a"))
+
+
+    def test_is_palindrome_true_parametrized(self):
+
+        cases = [
+            # Typowy: z spacjami i wielkimi literami
+            ("Kobyła ma mały bok", True),
+            # Brzegowy: pusty string (można uznać za palindrom)
+            ("", True),
+            # Brzegowy: pojedynczy znak
+            ("a", True),
+        ]
+        
+        for input_text, expected_text in cases:
+            with self.subTest(input=input_text):
+                self.assertTrue(is_palindrome(input_text), expected_text)
+    
+    def test_is_palindrome_false_parametrized(self):
+        cases = [
+           # Nie palindrom
+           ("Banan", False)
+          
+        ]
+        for text, expected in cases:
+            with self.subTest(text=text):
+                self.assertEqual(is_palindrome(text), expected)
