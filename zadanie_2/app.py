@@ -83,6 +83,9 @@ def convert_date_format(date_str):
 # Cel: Sprawdza palindrom (ignoruj spacje, wielkość liter).
 
 def is_palindrome(text):
-    print("Wywołano is_palindrome")  # Debug – usuń po teście, by zobaczyć w konsoli czy funkcja jest wywoływana
-    cleaned = ''.join(c.lower() for c in text if c.isalnum())
-    return cleaned == cleaned[::-1]
+    """Sprawdza, czy ciąg znaków jest palindromem, ignorując spacje i wielkość liter."""
+    # Usunięcie znaków niealfanumerycznych (spacje, interpunkcja) i zmiana na małe litery
+    cleaned_text = "".join(char.lower() for char in text if char.isalnum())
+    # Usunięto pustą linię, która była liczna jako 'missing'
+    # Porównanie tekstu z jego odwróconą wersją
+    return cleaned_text == cleaned_text[::-1]
