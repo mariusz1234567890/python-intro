@@ -54,7 +54,7 @@ def calculate_triangle_area(base: float, height: float) -> float:
 
     """Oblicza pole trójkąta. Rzuca ValueError dla ujemnych wartości."""
     if base < 0 or height < 0:
-        raise ValueError("Poddstawa i wysokość nie mogą być ujmene, ale o wartości zero")
+        raise ValueError("Podstawa i wysokość nie mogą być ujmene, ale o wartości zero")
     return (base * height) / 2
 
 
@@ -66,7 +66,7 @@ def filter_even_numbers(numbers: list[int]) -> list[int]:
     """Filtruje parzyste liczby z listy."""
     #  Iteruje przez każdą liczbę (num) w wejściowej liście numbers.
     #  Warunek filtrowania: Sprawdza, czy reszta z dzielenia liczby num przez 2 jest równa 0. Jest to definicja liczby parzystej.
-    return [nun for nun in numbers if nun % 2 == 0]
+    return [num for num in numbers if num % 2 == 0]
 
 # FUNKCJA KONWERTUJĄCA FORMAT DAT
 # Cel: Konwertuje datę z 'DD-MM-YYYY' na 'YYYY-MM-DD'.
@@ -83,5 +83,6 @@ def convert_date_format(date_str):
 # Cel: Sprawdza palindrom (ignoruj spacje, wielkość liter).
 
 def is_palindrome(text):
+    print("Wywołano is_palindrome")  # Debug – usuń po teście, by zobaczyć w konsoli czy funkcja jest wywoływana
     cleaned = ''.join(c.lower() for c in text if c.isalnum())
     return cleaned == cleaned[::-1]
