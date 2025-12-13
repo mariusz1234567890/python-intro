@@ -1,10 +1,3 @@
-# FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ E-MAIL / E-MAIL VALIDITY CHECK FUNCTION 
-
-# ! Metodolodia TDD: test najpierw -> potem kod minimalny -> refaktoryzacja 
-# ! Methodology of TDD: first test -> minimal code -> refactor of code
-
-
-
 # Wczytuje  `moduł Pythona o nazwie re (skrót od Regular Expressions).
     #  Moduł ten zawiera funkcje do pracy z wyrażeniami regularnymi, które są niezbędne do zaawansowanego przeszukiwania i dopasowywania wzorców w tekście.
 import re
@@ -43,46 +36,26 @@ def is_valid_email(email):
     return bool(re.match(pattern, email))
 
 
-# FUNKCJA DOKONUJĄCA PROSTYCH OBLICZEŃ MATEMATEMATYCZNYCH NP. OBLICZANIA POLA FIGURY / A FUNCTION THAT PERFORMS SIMPLE MATHEMATICAL CALCULATIONS, SUCH AS CALCULATING THE AREA OF A SHAPE.
-#  Cel: Oblicza pole trójkąta (wzór: (base * height) / 2). Proste obliczenia matematyczne.
 
-
-def calculate_triangle_area(base: float, height: float) -> float:
-
-    """Oblicza pole trójkąta. Rzuca ValueError dla ujemnych wartości."""
-    if base < 0 or height < 0:
-        raise ValueError("Podstawa i wysokość nie mogą być ujemne, ale o wartości zero")
-    return (base * height) / 2
-
-
-# FUNKCJA PRZETWARZAJĄCA LISTĘ DANYCH (SORTOWANIE, FILTRACJA) / DATA LIST PROCESSING FUNCTION 
-#  Cel: Filtruje parzyste liczby z listy (przetwarzanie list).
-
-def filter_even_numbers(numbers: list[int]) -> list[int]:
-    
-    """Filtruje parzyste liczby z listy."""
-    #  Iteruje przez każdą liczbę (num) w wejściowej liście numbers.
-    #  Warunek filtrowania: Sprawdza, czy reszta z dzielenia liczby num przez 2 jest równa 0. Jest to definicja liczby parzystej.
-    return [num for num in numbers if num % 2 == 0]
-
-# FUNKCJA KONWERTUJĄCA FORMAT DAT
-# Cel: Konwertuje datę z 'DD-MM-YYYY' na 'YYYY-MM-DD'.
-
-from datetime import datetime
-def convert_date_format(date_str):
-    try:
-        dt = datetime.strptime(date_str, "%d-%m-%Y")
-        return dt.strftime("%Y-%m-%d")
-    except ValueError:
-        raise ValueError("Niepoprawny wejściowy format daty, oczekiwany jest DD-MM-YYYY")
 
 # FUNKCJA SPRAWDZAJĄCA, CZY TEKST JEST PALINDROMEM.
-"""Sprawdza, czy ciąg znaków jest palindromem, ignorując spacje i wielkość liter."""
+# Cel: Sprawdza palindrom (ignoruj spacje, wielkość liter).
 
 def is_palindrome(text):
-   
-    # Usunięcie znaków niealfanumerycznych (spacje, interpunkcja) i zmiana na małe litery
+    """Sprawdza, czy ciąg znaków jest palindromem, ignorując spacje i wielkość liter."""
+    
     cleaned_text = "".join(char.lower() for char in text if char.isalnum())
     # Usunięto pustą linię, która była liczna jako 'missing'
     # Porównanie tekstu z jego odwróconą wersją
     return cleaned_text == cleaned_text[::-1]
+
+
+# FUNKCJA LICZĄCĄ SŁOWA W TEKŚCIE
+"""
+    Liczy słowa w tekście.
+    Args:        text (str): Tekst do analizy.
+
+    Returns:     int: Liczba słów.
+    """
+def count_words(text: str) -> int:
+    return len(text.split())
