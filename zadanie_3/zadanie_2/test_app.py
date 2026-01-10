@@ -1,3 +1,6 @@
+# FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ E-MAIL / E-MAIL VALIDITY CHECK FUNCTION 
+
+
 # Instalacja modulu do unit testow / Instalation of module to unit tests.
 
 import unittest
@@ -11,18 +14,20 @@ print("Moduł 'unittest' jest dostępny.")
     # py -m pip install coverage
 
 
-import math
-print("Moduł 'math' jest dostępny.")
+# Import konkretnej funkcji is_valid_email z pliku o nazwie app.py, którą chcemy przetestować.
+from app import is_valid_email  
 
 # Import konkretnej funkcji calculate_triangle_area z pliku o nazwie app.py, którą chcemy przetestować.
-from lab_3_lib.math_utils import calculate_triangle_area
+from app import calculate_triangle_area
+
+# Import konkretnej funkcji filter_even_numbers z pliku o nazwie app.py, którą chcemy przetestować.
+from app import filter_even_numbers
 
 # Import konkretnej funkcji convert_date_format z pliku o nazwie app.py, którą chcemy przetestować.
-from lab_3_lib.math_utils import convert_date_format
+from app import convert_date_format
 
-# Import konkretnej funkcji calculate_square_root z pliku o nazwie app.py, którą chcemy przetestować.
-from lab_3_lib.math_utils import calculate_square_root
-
+# Import konkretnej funkcji  is_polindrome z pliku o nazwie app.py, którą chcemy przetestować.
+from app import is_palindrome
 
 
 # To jest definicja klasy testowej. Musi dziedziczyć po klasie unittest.TestCase. Klasa testowa gromadzi zestaw powiązanych testów.
@@ -40,7 +45,12 @@ class TestApp(unittest.TestCase):
 
 
         self.test_data = {
-        # Dla calculate_triangle_area
+            # Dla is_valid_email
+            'valid_email': 'example@test.com',        # Typowy poprawny email
+            'invalid_email': 'exampletest.com',       # Brak @
+            'edge_empty': '',                         # Pusty string (brzegowy)
+
+            # Dla calculate_triangle_area
             'typical_base': 10.0,                     # Typowa podstawa (pozytywna)
             'typical_height': 5.0,                    # Typowa wysokość (pozytywna)
             'typical_expected': 25.0,                 # Oczekiwany wynik dla typowego
@@ -48,6 +58,14 @@ class TestApp(unittest.TestCase):
             'zero_height': 0.0,                       # Brzegowy: zero jako wysokość
             'zero_expected': 0.0,                     # Oczekiwany wynik dla zera
             'negative_base': -10.0,                   # Błędny: ujemna wartość (dla ValueError)
+
+            # Nowe: Dla filter_even_numbers (przetwarzanie listy – filtracja parzystych)
+            'numbers_list_typical': [1, 2, 3, 4, 5],  # Typowa: mieszana, oczekiwane [2, 4]
+            'numbers_list_typical_expected': [2, 4],  # Oczekiwany wynik dla typowej
+            'numbers_list_empty': [],                 # Brzegowy: pusta lista, oczekiwane []
+            'numbers_list_empty_expected': [],        # Oczekiwany wynik dla pustej
+            'numbers_list_odd': [1, 3, 5],        # Błędny: same nieparzyste, oczekiwane []
+            'numbers_list_odd_expected': [],      # Oczekiwany wynik dla nieparzystych   
 
             # Dla convert_date_format
             'valid_date_typical': '31-12-2023',              # Typowy: koniec roku
@@ -60,31 +78,40 @@ class TestApp(unittest.TestCase):
             'valid_date_current_expected': '2025-11-14',     # Oczekiwany wynik
             'invalid_date_day': '32-12-2023',                # Błędny: nieprawidłowy dzień
             'invalid_date_non_leap': '29-02-2023',           # Błędny: nieprzestępny rok
-            'invalid_date_format': 'abc-def-ghi',            # Błędny: całkowicie zły format
+            'invalid_date_format': 'abc-def-ghi',             # Błędny: całkowicie zły format
 
-
-            #  Dla calculate_square_root
-            'typical_input': 16.0,                          # Typowy
-            'typical_expected': 4.0,
-
-            'edge_zero_input': 0.0,                          # Brzegowy
-            'edge_zero_expected': 0.0,
-            
-            'large_input': 10000.0,                         # Duża liczba
-            'large_expected': 100.0,
-            
-            'float_input': 2.25,                             # Przecinkowy
-            'float_expected': 1.5,
-
-            'negative_input': -4.0,                         # Błędny (ujemna liczba)
-            'negative_expected_error_message': "Liczba musi być nieujemna."
-
+            # Dla is_palindrome
+            'palindrome_typical': 'Kobyła ma mały bok',  # Typowy: palindrom z spacjami i polskimi znakami
+            'non_palindrome': 'Banan',                    # Nie palindrom: prosty tekst
+            'edge_empty': '',                             # Brzegowy: pusty string (uznawany za palindrom)
+            'edge_single_char': 'a',                      # Brzegowy: pojedynczy znak
             }
-        
-        # Czyszczenie po teście: zamknij zasoby, jeśli otwarte w setUp
+
+
+    # Czyszczenie po teście: zamknij zasoby, jeśli otwarte w setUp
     def tearDown(self):
         
         pass
+
+
+    # To jest pojedynczy test (Metoda (funkcja wewnątrz klasy)). Nazwa musi zaczynać się od test_. Sprawdza, czy funkcja poprawnie rozpoznaje poprawny email.
+    # self odnosi się do konkretnej instancji obiektu.
+    def test_is_valid_email_valid(self):
+
+        # Typowy przypadek: poprawny email
+        # Asercja – mechanizm sprawdzający. Tutaj: oczekujemy, że wywołanie funkcji z poprawnym emailem zwróci wartość True. Jeśli nie, test zawiedzie.
+        self.assertTrue(is_valid_email(self.test_data['valid_email']))
+
+    def test_is_valid_email_invalid(self):
+        # Przypadek braku @.
+        # Oczekujemy, że funkcja zwróci False.
+        self.assertFalse(is_valid_email(self.test_data['invalid_email']))
+
+    def test_is_valid_email_edge(self):
+        # Przypadek brzegowy(edge).
+        # Błędne dane: pusty string.
+        # Oczekujemy, że funkcja zwróci False.
+        self.assertFalse(is_valid_email(self.test_data['edge_empty'])) 
 
 
 # FUNKCJA DOKONUJĄCA PROSTYCH OBLICZEŃ MATEMATEMATYCZNYCH NP. OBLICZANIA POLA FIGURY / A FUNCTION THAT PERFORMS SIMPLE MATHEMATICAL CALCULATIONS, SUCH AS CALCULATING THE AREA OF A SHAPE.
@@ -138,6 +165,61 @@ class TestApp(unittest.TestCase):
             with self.subTest(base=base, height=height):
                 self.assertEqual(calculate_triangle_area(base, height), expected)
 
+# FUNKCJA PRZETWARZAJĄCA LISTĘ DANYCH (SORTOWANIE, FILTRACJA) / DATA LIST PROCESSING FUNCTION 
+
+    def test_filter_even_numbers_typical(self):
+
+        # Typowy przypadek: mieszana lista
+        # Używa danych z setUp
+        input_list = self.test_data['numbers_list_typical']
+        expected = self.test_data['numbers_list_typical_expected']
+        self.assertEqual(filter_even_numbers(input_list), expected)
+        
+        # Używa danych z setUp zamiast hardcoded (pozostawione dla celów edukacyjno-porównawczych)
+            # self.assertEqual(filter_even_numbers([1,2,3,4,5]), [2,4])
+
+    def test_filter_even_numbers_empty(self):
+        
+        # Przypadek brzegowy: puste listy
+        # Używa danych z setUp
+
+        input_list = self.test_data['numbers_list_empty']
+        expected = self.test_data['numbers_list_empty_expected']
+        self.assertEqual(filter_even_numbers(input_list), expected)
+        
+        # Używa danych z setUp zamiast hardcoded (pozostawione dla celów edukacyjno-porównawczych)    
+            # self.assertEqual(filter_even_numbers([]),[])
+
+    def test_filter_even_numbers_all_odd(self):
+
+        # Przypadek błędny: same nieparzyste
+        # Używa danych z setUp
+
+        input_list = self.test_data['numbers_list_odd']
+        expected = self.test_data['numbers_list_odd_expected']
+        self.assertEqual(filter_even_numbers(input_list), expected)
+            
+        # Używa danych z setUp zamiast hardcoded (pozostawione dla celów edukacyjno-porównawczych)
+            # self.assertEqual(filter_even_numbers([1,3,5]), [])
+
+
+    def test_filter_even_numbers_parametrized(self):
+        # Parametryzowany: mieszanie danych z setUp
+        cases = [
+            (self.test_data['numbers_list_typical'], self.test_data['numbers_list_typical_expected']),
+            (self.test_data['numbers_list_empty'], self.test_data['numbers_list_empty_expected']),
+            (self.test_data['numbers_list_odd'], self.test_data['numbers_list_odd_expected'])
+        ]
+        for input_list, expected in cases:
+            with self.subTest(input_list=input_list):
+                self.assertEqual(filter_even_numbers(input_list), expected)
+
+    # Używa danych z setUp zamiast hardcoded (pozostawione dla celów edukacyjno-porównawczych)
+            # def test_filter_even_numbers_parametrized(self):
+            #     cases = [([1,2,3,4,5], [2,4]), ([],[]), ([1,3,5], [])]
+            #     for input_list, expected in cases:
+            #         with self.subTest(input_list=input_list):
+            #             self.assertEqual(filter_even_numbers(input_list), expected)
 
 # FUNKCJA KONWERTUJĄCA FORMAT DAT.
 
@@ -198,47 +280,59 @@ class TestApp(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     convert_date_format(input_date)
 
-#  FUNCKJA OBLICZAJĄCA PIERWIASTEK KWADRATOWY
+        # Używa danych z setUp zamiast hardcoded (pozostawione dla celów edukacyjno-porównawczych)            
+            # def test_convert_date_format_valid_parametrized(self):
+            #     cases = [
+            #         ("31-12-2023", "2023-12-31"),  # Typowy: koniec roku
+            #         ("01-01-2000", "2000-01-01"),  # Brzegowy: początek wieku
+            #         ("29-02-2024", "2024-02-29")   # Brzegowy: rok przestępny
+            #     ]
+            #     for input_date, expected in cases:
+            #         with self.subTest(input_date=input_date):
+            #             self.assertEqual(convert_date_format(input_date), expected)
 
-    def test_typical_positive_number(self):
-        """Testuje typową, dodatnią liczbę całkowitą."""
-        num = self.test_data['typical_input']
-        expected = self.test_data['typical_expected']
-        result = calculate_square_root(num)
-        self.assertEqual(result, expected)
+            # def test_convert_date_format_invalid_parametrized(self):
+            #     cases = [
+            #         "32-12-2023",  # Nieprawidłowy dzień
+            #         "29-02-2023",  # Nieprzestępny rok
+            #         "abc-def-ghi"  # Całkowicie błędny format
+            #     ]
+            #     for input_date in cases:
+            #         with self.subTest(input_date=input_date):
+            #             with self.assertRaises(ValueError):
+            #                 convert_date_format(input_date)
 
-    def test_edge_case_zero(self):
-        """Testuje przypadek brzegowy dla zera."""
-        num = self.test_data['edge_zero_input']
-        expected = self.test_data['edge_zero_expected']
-        result = calculate_square_root(num)
-        self.assertEqual(result, expected)
-        
-    def test_large_number(self):
-        """Testuje dużą liczbę, aby upewnić się, że typ float działa poprawnie."""
-        num = self.test_data['large_input']
-        expected = self.test_data['large_expected']
-        result = calculate_square_root(num)
-        self.assertEqual(result, expected)
-        
-    def test_float_input(self):
-        """Testuje liczbę zmiennoprzecinkową (float)."""
-        num = self.test_data['float_input']
-        expected = self.test_data['float_expected']
-        result = calculate_square_root(num)
-        # Używamy assertAlmostEqual dla liczb zmiennoprzecinkowych, 
-        # aby uniknąć błędów precyzji, choć w tym przypadku dokładność jest zachowana.
-        self.assertAlmostEqual(result, expected)
 
-    def test_negative_number_raises_error(self):
-        """
-        Testuje, czy podanie ujemnej liczby powoduje podniesienie wyjątku ValueError 
-        z poprawną wiadomością.
-        """
-        num = self.test_data['negative_input']
-        expected_msg = self.test_data['negative_expected_error_message']
-        
-        # assertRaises to menedżer kontekstu, który sprawdza, czy dany blok kodu 
-        # podniesie oczekiwany wyjątek.
-        with self.assertRaisesRegex(ValueError, expected_msg):
-            calculate_square_root(num)
+# FUNKCJA SPRAWDZAJĄCA, CZY TEKST JEST PALINDROMEM.
+
+    def test_is_palindrome_typical(self):
+            # Przypadek typowy: jest palindromem
+        self.assertTrue(is_palindrome(self.test_data['palindrome_typical']))
+
+    def test_is_palindrome_not(self):
+            # Przypadek: nie jest palindromem
+        self.assertFalse(is_palindrome(self.test_data['non_palindrome']))
+
+    def test_is_palindrome_edge(self):
+            # Przypadek brzegowy: brak znaku lub pojedynczy znak
+        self.assertTrue(is_palindrome(self.test_data['edge_empty']))
+        self.assertTrue(is_palindrome(self.test_data['edge_single_char']))
+
+    
+    def test_is_palindrome_true_parametrized(self):
+        cases = [
+            (self.test_data['palindrome_typical'], True),
+            (self.test_data['edge_empty'], True),
+            (self.test_data['edge_single_char'], True),
+            ]
+        for text, expected in cases:
+            with self.subTest(text=text):
+                self.assertEqual(is_palindrome(text), expected)
+
+# def test_is_palindrome_false_parametrized(self):
+#         cases = [
+#             (self.test_data['non_palindrome'], False)
+#         ]
+#         for text, expected in cases:
+#             with self.subTest(text=text):
+#                 self.assertEqual(is_palindrome(text), expected)

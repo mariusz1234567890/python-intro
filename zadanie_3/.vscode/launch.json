@@ -1,0 +1,40 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+        },
+
+        
+    
+        {
+            "name": "Python Debugger: Module",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "tests.test_data_utils"
+            
+        },
+        // Nowa konfiguracja dla string_utils
+        {
+            "name": "Run tests.test_string_utils",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "tests.test_string_utils",
+            "cwd": "${workspaceFolder}",
+            "justMyCode": true
+        },
+        // Nowa konfiguracja dla math_utils
+        {
+            "name": "Run tests.test_math_utils",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "tests.test_math_utils",
+            "cwd": "${workspaceFolder}",
+            "justMyCode": true
+        }
+    ]
+}
